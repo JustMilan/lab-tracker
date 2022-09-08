@@ -16,5 +16,8 @@ namespace lab_tracker.Data
 
         public DbSet<lab_tracker.Models.Student> Student { get; set; } = default!;
 
+        public DbSet<lab_tracker.Models.Assignment> Assignment { get; set; }
+
+        public DbSet<lab_tracker.Models.AssignmentStudentStatus> AssignmentStudentStatus { get; set; }
     }
 }

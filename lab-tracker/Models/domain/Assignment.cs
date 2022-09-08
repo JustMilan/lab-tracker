@@ -1,13 +1,18 @@
+
+
+using System.ComponentModel.DataAnnotations;
+
 namespace lab_tracker.Models;
 
 public class Assignment
 {
-    private string Name { get; set; }
-    private AssignmentStatus Status { get; set; }
+    [Key]
+    public int Id { get; set; }
+    public string Name { get; set; }
+    //public virtual ICollection<Student> Students { get; set; }
 
-    public Assignment(string name, AssignmentStatus status = AssignmentStatus.NotStarted)
+    public Assignment()
     {
-        this.Name = name;
-        this.Status = status;
+        //this.Students = new HashSet<Student>();
     }
 }
