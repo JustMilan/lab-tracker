@@ -5,8 +5,7 @@ namespace lab_tracker.Models
 {
     public class AssignmentStudentStatus
     {
-        [Key]
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
 
 
         public enum Status
@@ -17,13 +16,10 @@ namespace lab_tracker.Models
             Done
         }
 
-        public Status status;
+        public Status status { get; set; }
 
 
-
-        [ForeignKey("AssignmentId")]
-        public int AssignmentId;
-        [ForeignKey("StudentId")]
-        public int StudentId;
+        [ForeignKey("AssignmentId")] public int AssignmentId { get; set; }
+        [ForeignKey("StudentId")] public int StudentId { get; set; }
     }
 }
