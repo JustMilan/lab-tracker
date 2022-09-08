@@ -1,12 +1,11 @@
 ﻿using lab_tracker.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace lab_tracker.Data
 {
-
     public static class DbInitializer
     {
-
         public static void Initialize(lab_trackerContext context)
         {
             context.Database.EnsureCreated();
@@ -15,41 +14,65 @@ namespace lab_tracker.Data
                 return;
             }
 
-            Assignment assignment1 = new Assignment();
-            assignment1.Name = "opdracht1";
+            var assignment1 = new Assignment
+            {
+                Name = "opdracht1"
+            };
 
-            Assignment assignment2 = new Assignment();
-            assignment2.Name = "opdracht2";
+            var assignment2 = new Assignment
+            {
+                Name = "opdracht2"
+            };
 
-            Assignment assignment3 = new Assignment();
-            assignment3.Name = "opdracht3";
+            var assignment3 = new Assignment
+            {
+                Name = "opdracht3"
+            };
 
             context.Assignment.Add(assignment1);
             context.Assignment.Add(assignment2);
             context.Assignment.Add(assignment3);
             context.SaveChanges();
 
-            
 
-            Student mockStudent1 = new Student();
-            mockStudent1.Name = "pietje";
+            var mockStudent1 = new Student
+            {
+                Name = "pietje"
+            };
 
-
-            Student mockStudent2 = new Student();
-            mockStudent2.Name = "janus";
+            var mockStudent2 = new Student
+            {
+                Name = "janus"
+            };
 
             context.Student.Add(mockStudent1);
             context.Student.Add(mockStudent2);
             context.SaveChanges();
 
+            var values = Enum.GetValues(typeof(AssignmentStudentStatus.Status));
+            var random = new Random();
 
-            AssignmentStudentStatus mockAssignmentStudentStatus = new AssignmentStudentStatus();
-            mockAssignmentStudentStatus.status = AssignmentStudentStatus.Status.Help;
-            mockAssignmentStudentStatus.StudentId = mockStudent2.Id;
-            mockAssignmentStudentStatus.AssignmentId = assignment1.Id;
-            context.AssignmentStudentStatus.Add(mockAssignmentStudentStatus);
+
+            foreach (var student in context.Student)
+            {
+                foreach (var assignment in context.Assignment)
+                {
+                    var randomStatus = (AssignmentStudentStatus.Status)values.GetValue(random.Next(values.Length))!;
+                    Console.WriteLine(randomStatus);
+
+                    var mockAssignmentStudentStatus1 = new AssignmentStudentStatus
+                    {
+                        status = randomStatus,
+                        StudentId = student.Id,
+                        AssignmentId = assignment.Id
+                    };
+
+                    context.AssignmentStudentStatus.Add(mockAssignmentStudentStatus1);
+                    context.SaveChanges();
+                }
+            }
+
             context.SaveChanges();
         }
     }
-
 }
