@@ -45,8 +45,20 @@ namespace lab_tracker.Data
                 Name = "janus"
             };
 
+            var mockStudent3 = new Student
+            {
+                Name = "Henk"
+            };
+
+            var mockStudent4 = new Student
+            {
+                Name = "Klaasje"
+            };
+
             context.Student.Add(mockStudent1);
             context.Student.Add(mockStudent2);
+            context.Student.Add(mockStudent3);
+            context.Student.Add(mockStudent4);
             context.SaveChanges();
 
             var values = Enum.GetValues(typeof(AssignmentStudentStatus.Status));

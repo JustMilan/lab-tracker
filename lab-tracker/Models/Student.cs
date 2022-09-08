@@ -17,11 +17,5 @@ namespace lab_tracker.Models
 
         public string Name { get; set; }
 
-        //public virtual ICollection<Assignment> assignments { get; set; }
-
-        //public Student()
-        //{
-        //    //this.assignments = new HashSet<Assignment>();
-        //}
     }
 }

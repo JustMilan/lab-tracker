@@ -34,6 +34,47 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult AskHelp(int studentId, int assignmentId)
+    {
+        AssignmentStudentStatus oldStatus = _context.AssignmentStudentStatus
+            .Where(ass => ass.AssignmentId == assignmentId).Where(ass => ass.StudentId == studentId)
+            .FirstOrDefault();
+
+        if (oldStatus == null)
+        {
+            // not found
+            Console.WriteLine($"Status for student: {studentId} for assignment: {assignmentId} was not found");
+            return RedirectToAction(nameof(Index));
+        }
+
+        oldStatus.status = AssignmentStudentStatus.Status.Help;
+
+        _context.AssignmentStudentStatus.Update(oldStatus);
+        _context.SaveChanges();
+        return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult RemoveHelp(int studentId, int assignmentId)
+    {
+        AssignmentStudentStatus oldStatus = _context.AssignmentStudentStatus
+            .Where(ass => ass.AssignmentId == assignmentId).Where(ass => ass.StudentId == studentId)
+            .FirstOrDefault();
+
+        if (oldStatus == null)
+        {
+            // not found
+            Console.WriteLine($"Status for student: {studentId} for assignment: {assignmentId} was not found");
+            return RedirectToAction(nameof(Index));
+        }
+
+        oldStatus.status = AssignmentStudentStatus.Status.Done;
+
+        _context.AssignmentStudentStatus.Update(oldStatus);
+        _context.SaveChanges();
+        return RedirectToAction(nameof(Index));
+    }
+
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

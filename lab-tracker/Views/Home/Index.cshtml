@@ -40,9 +40,20 @@
                     }
 
                     <td>
-                        @Html.DisplayFor(modelItem => Model.AssignmentStudentStatuses
+                            @if (Model.AssignmentStudentStatuses
+                           .FirstOrDefault(ass => ass.AssignmentId == assignment.Id && ass.StudentId == student.Id)
+                           .status == AssignmentStudentStatus.Status.Help){
+                               <b>Help needed</b>
+
+                                @*AskHelp(int studentId, int assignmentId)*@
+                                <a asp-action="RemoveHelp" asp-route-studentId="@student.Id" asp-route-assignmentId="@assignment.Id">X</a>
+                           }else{
+                               <p></p>
+                                <a asp-action="AskHelp" asp-route-studentId="@student.Id" asp-route-assignmentId="@assignment.Id">Ask help</a>
+                           }
+@*                        @Html.DisplayFor(modelItem => Model.AssignmentStudentStatuses
                             .FirstOrDefault(ass => ass.AssignmentId == assignment.Id && ass.StudentId == student.Id)
-                            .status)
+                            .status)*@
                     </td>
                 }
             </tr>
