@@ -4,36 +4,49 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <tbody>
-        @foreach (var item in Model.Students)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-            </tr>
-        }
-        @foreach (var item in Model.Assignments)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-            </tr>
-        }
-        @foreach (var item in Model.AssignmentStudentStatuses)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.status)
-                </td>
-            </tr>
-        }
-    </tbody>
-</div>
 
+    <table>
+        <thead>
+        <tr>
+            <td>Student</td>
+
+            @foreach (var assignment in Model.Assignments)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => assignment.Name)
+                </td>
+            }
+        </tr>
+        </thead>
+
+
+        <tbody>
+        @foreach (var student in Model.Students)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => student.Name)
+                </td>
+                @foreach (var assignment in Model.Assignments)
+                {
+                    @foreach (var tryy in Model.AssignmentStudentStatuses)
+                    {
+                        Console.WriteLine($"{assignment.Id} vs {tryy.AssignmentId}");
+                        Console.WriteLine($"{student.Id} vs {tryy.StudentId}");
+                        Console.WriteLine($"{assignment.Name} vs {tryy.status}");
+                        Console.WriteLine("\n");
+                    }
+
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.AssignmentStudentStatuses
+                            .FirstOrDefault(ass => ass.AssignmentId == assignment.Id && ass.StudentId == student.Id)
+                            .status)
+                    </td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
